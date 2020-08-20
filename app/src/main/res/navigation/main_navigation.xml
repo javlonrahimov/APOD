@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/id_home">
+
+    <fragment
+        android:id="@+id/id_home"
+        android:name="com.javlonrahimov1212.apod.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_preferences"
+            app:destination="@+id/preferencesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/id_gallery"
+        android:name="com.javlonrahimov1212.apod.ui.gallery.GalleryFragment"
+        android:label="fragment_gallery"
+        tools:layout="@layout/fragment_gallery" />
+    <fragment
+        android:id="@+id/id_preferences"
+        android:name="com.javlonrahimov1212.apod.ui.preferences.PreferencesFragment"
+        android:label="fragment_preferences"
+        tools:layout="@layout/fragment_preferences">
+        <action
+            android:id="@+id/action_preferences_to_gallery"
+            app:destination="@id/id_gallery" />
+    </fragment>
+</navigation>
