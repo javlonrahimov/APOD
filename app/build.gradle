@@ -45,4 +45,8 @@ dependencies {
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
+
+    //Ken Burns View
+    implementation "com.flaviofaria:kenburnsview:1.0.7"
+
 }

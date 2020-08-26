@@ -2,19 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/id_gallery"
-        android:enabled="true"
-        android:icon="@drawable/ic_round_gallery_24"
-        android:title="Gallery"/>
-    <item
         android:id="@+id/id_home"
         android:enabled="true"
         android:icon="@drawable/ic_round_home_24"
-        android:title="Home"/>
+        android:title="Home" />
+
+    <item
+        android:id="@+id/id_explore"
+        android:icon="@drawable/ic_baseline_explore_24"
+        android:title="Explore" />
+
+    <item
+        android:id="@+id/id_gallery"
+        android:enabled="true"
+        android:icon="@drawable/ic_round_gallery_24"
+        android:title="Gallery" />
     <item
         android:id="@+id/id_preferences"
         android:enabled="true"
         android:icon="@drawable/ic_round_settings_24"
-        android:title="Preferences"/>
+        android:title="Preferences" />
 
 </menu>

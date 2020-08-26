@@ -18,7 +18,11 @@
         android:id="@+id/id_gallery"
         android:name="com.javlonrahimov1212.apod.ui.gallery.GalleryFragment"
         android:label="fragment_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery">
+        <action
+            android:id="@+id/action_gallery_to_library"
+            app:destination="@id/id_explore" />
+    </fragment>
     <fragment
         android:id="@+id/id_preferences"
         android:name="com.javlonrahimov1212.apod.ui.preferences.PreferencesFragment"
@@ -28,4 +32,9 @@
             android:id="@+id/action_preferences_to_gallery"
             app:destination="@id/id_gallery" />
     </fragment>
+    <fragment
+        android:id="@+id/id_explore"
+        android:name="com.javlonrahimov1212.apod.ui.explore.LibraryFragment"
+        android:label="fragment_library"
+        tools:layout="@layout/fragment_explore" />
 </navigation>
