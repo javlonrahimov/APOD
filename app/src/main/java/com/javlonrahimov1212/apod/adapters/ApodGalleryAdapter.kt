@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.javlonrahimov1212.apod.R
 import com.javlonrahimov1212.apod.models.Apod
 import kotlinx.android.synthetic.main.item_apod_gallery.view.*
@@ -34,11 +35,9 @@ class ApodGalleryAdapter(val apods: List<Apod>) :
         private val apodCopyright: TextView = itemView.copyright_item_apod
 
         fun bindData(apod: Apod) {
-            apodImage.setImageResource(
-                apod.imageUrl
-            )
+            Glide.with(apodImage).load(apod.url).into(apodImage)
             apodTitle.text = apod.title
-            apodDescription.text = apod.description
+            apodDescription.text = apod.explanation
             apodCopyright.text = apod.copyright
         }
 

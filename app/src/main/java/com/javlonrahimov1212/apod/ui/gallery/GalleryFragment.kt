@@ -5,14 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.javlonrahimov1212.apod.R
 import com.javlonrahimov1212.apod.adapters.ApodGalleryAdapter
-import com.javlonrahimov1212.apod.models.Apod
-import kotlinx.android.synthetic.main.fragment_gallery.view.*
+import com.javlonrahimov1212.apod.databinding.FragmentGalleryBinding
+import com.javlonrahimov1212.apod.retrofit.ApiHelper
+import com.javlonrahimov1212.apod.retrofit.RetrofitBuilder
 import kotlin.math.abs
 
 /**
@@ -22,16 +24,28 @@ import kotlin.math.abs
  */
 class GalleryFragment : Fragment() {
 
+    private lateinit var viewModel: GalleryViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_gallery, container, false)
-        view.apod_view_pager.adapter = ApodGalleryAdapter(populateData())
-        view.apod_view_pager.clipToPadding = false
-        view.apod_view_pager.clipChildren = false
-        view.apod_view_pager.offscreenPageLimit = 3
-        view.apod_view_pager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+        val binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        setupViewModel()
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        viewModel.apod30Days.observe(viewLifecycleOwner, Observer {
+            binding.apodViewPager.adapter = ApodGalleryAdapter(it)
+        })
+        setUpViewPager(binding)
+        return binding.root
+    }
+
+    private fun setUpViewPager(binding: FragmentGalleryBinding) {
+        binding.apodViewPager.clipToPadding = false
+        binding.apodViewPager.clipChildren = false
+        binding.apodViewPager.offscreenPageLimit = 3
+        binding.apodViewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         val compositePageTransformer = CompositePageTransformer()
         compositePageTransformer.addTransformer(MarginPageTransformer(80))
         compositePageTransformer.addTransformer(ViewPager2.PageTransformer { page, position ->
@@ -39,24 +53,14 @@ class GalleryFragment : Fragment() {
             page.scaleY = 0.9f + r * 0.1f
         })
 
-        view.apod_view_pager.setPageTransformer(compositePageTransformer)
-
-        return view
+        binding.apodViewPager.setPageTransformer(compositePageTransformer)
     }
 
-    private fun populateData(): List<Apod> {
-        val apods = ArrayList<Apod>()
-        val apod = Apod(
-            "Hello again",
-            "From July of 1997, a ramp from the Pathfinder lander, the Sojourner robot rover, airbags, a couch, Barnacle Bill and Yogi Rock appear together in this 3D stereo view of the surface of Mars. Barnacle Bill is the rock just left of the solar-paneled Sojourner. Yogi is the big friendly-looking boulder at top right.",
-            R.drawable.image,
-            "NASA"
-        )
-
-        for (i in 1..10) {
-            apods.add(apod)
-        }
-        return apods
+    private fun setupViewModel() {
+        viewModel = ViewModelProviders.of(
+            this,
+            GalleryViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
+        ).get(GalleryViewModel::class.java)
     }
 
 }

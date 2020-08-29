@@ -14,6 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_explore_fragment"
         android:layout_margin="8dp"
         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         tools:itemCount="10"

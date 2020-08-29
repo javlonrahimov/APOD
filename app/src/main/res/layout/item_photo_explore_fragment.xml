@@ -10,6 +10,7 @@
         app:cardCornerRadius="16dp"
         android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/image_item_photo"
             android:scaleType="centerCrop"
             android:src="@drawable/image"
             android:layout_width="match_parent"
@@ -17,6 +18,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
+        android:id="@+id/title_item_photo"
         android:textSize="16sp"
         android:layout_margin="8dp"
         android:text="@string/dummy_text"

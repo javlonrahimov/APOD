@@ -1,26 +1,42 @@
 package com.javlonrahimov1212.apod.adapters
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.javlonrahimov1212.apod.models.Apod
-import kotlinx.android.synthetic.main.item_apod_gallery.view.*
+import com.javlonrahimov1212.apod.R
+import com.javlonrahimov1212.apod.models.Photo
+import kotlinx.android.synthetic.main.item_photo_explore_fragment.view.*
 
-class ApodExploreAdapter {
+class ApodExploreAdapter(private val photos: List<Photo>) :
+    RecyclerView.Adapter<ApodExploreAdapter.ApodExploreViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApodExploreViewHolder {
+        return ApodExploreAdapter.ApodExploreViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_photo_explore_fragment, parent, false)
+        )
+    }
+
+    override fun onBindViewHolder(holder: ApodExploreViewHolder, position: Int) {
+        holder.bindData(photos[position])
+    }
+
+    override fun getItemCount(): Int {
+        return photos.size
+    }
+
     class ApodExploreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val apodImage: ImageView = itemView.image_item_apod
-        private val apodTitle: TextView = itemView.title_item_apod
-        private val apodDescription: TextView = itemView.description_item_apod
-        private val apodCopyright: TextView = itemView.copyright_item_apod
+        private val apodImage: ImageView = itemView.image_item_photo
+        private val apodTitle: TextView = itemView.title_item_photo
 
-        fun bindData(apod: Apod) {
+        fun bindData(photo: Photo) {
             apodImage.setImageResource(
-                apod.imageUrl
+                photo.url
             )
-            apodTitle.text = apod.title
-            apodDescription.text = apod.description
-            apodCopyright.text = apod.copyright
+            apodTitle.text = photo.title
         }
 
     }

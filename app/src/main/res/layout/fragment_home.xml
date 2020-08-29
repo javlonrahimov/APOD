@@ -1,128 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/text_view_today_home_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:text="@string/today"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <TextView
-        android:id="@+id/text_view_day_of_the_week_home_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Saturday"
-        app:layout_constraintEnd_toStartOf="@id/circle_decorator_home_fragment"
-        app:layout_constraintStart_toStartOf="@id/text_view_today_home_fragment"
-        app:layout_constraintTop_toBottomOf="@id/text_view_today_home_fragment" />
+        <variable
+            name="viewModel"
+            type="com.javlonrahimov1212.apod.ui.home.HomeViewModel" />
+    </data>
 
-    <ImageView
-        android:id="@+id/circle_decorator_home_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:src="@drawable/ic_round_circle_24"
-        app:layout_constraintBottom_toBottomOf="@id/text_view_day_of_the_week_home_fragment"
-        app:layout_constraintEnd_toStartOf="@id/text_view_day_of_the_month_home_fragment"
-        app:layout_constraintStart_toEndOf="@id/text_view_day_of_the_week_home_fragment"
-        app:layout_constraintTop_toTopOf="@id/text_view_day_of_the_week_home_fragment" />
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/text_view_day_of_the_month_home_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="August 22"
-        app:layout_constraintEnd_toEndOf="@id/text_view_today_home_fragment"
-        app:layout_constraintStart_toEndOf="@id/circle_decorator_home_fragment"
-        app:layout_constraintTop_toBottomOf="@id/text_view_today_home_fragment" />
+        <TextView
+            android:id="@+id/text_view_today_home_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="@string/today"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="22dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/circle_decorator_home_fragment">
+        <TextView
+            android:id="@+id/text_view_day_of_the_week_home_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saturday"
+            app:layout_constraintEnd_toStartOf="@id/circle_decorator_home_fragment"
+            app:layout_constraintStart_toStartOf="@id/text_view_today_home_fragment"
+            app:layout_constraintTop_toBottomOf="@id/text_view_today_home_fragment" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/circle_decorator_home_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_round_circle_24"
+            app:layout_constraintBottom_toBottomOf="@id/text_view_day_of_the_week_home_fragment"
+            app:layout_constraintEnd_toStartOf="@id/text_view_day_of_the_month_home_fragment"
+            app:layout_constraintStart_toEndOf="@id/text_view_day_of_the_week_home_fragment"
+            app:layout_constraintTop_toTopOf="@id/text_view_day_of_the_week_home_fragment" />
 
-            <com.flaviofaria.kenburnsview.KenBurnsView
+        <TextView
+            android:id="@+id/text_view_day_of_the_month_home_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="August 22"
+            app:layout_constraintEnd_toEndOf="@id/text_view_today_home_fragment"
+            app:layout_constraintStart_toEndOf="@id/circle_decorator_home_fragment"
+            app:layout_constraintTop_toBottomOf="@id/text_view_today_home_fragment" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="22dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/circle_decorator_home_fragment">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/image" />
+                android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/background_title_home_fragment"
-                android:orientation="vertical"
-                android:paddingStart="12dp"
-                android:paddingTop="44dp"
-                android:paddingEnd="12dp"
-                android:paddingBottom="12dp"
-                app:layout_constraintBottom_toBottomOf="parent">
+                <com.flaviofaria.kenburnsview.KenBurnsView
+                    android:id="@+id/test_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:imageUrl="@{viewModel.apodToday.url}"
+                    tools:src="@drawable/image" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Yogi And Friends In 3D"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="4"
-                    android:text="@string/dummy_text"
-                    android:textColor="#B3FFFFFF" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:orientation="horizontal">
+                    android:background="@drawable/background_title_home_fragment"
+                    android:orientation="vertical"
+                    android:paddingStart="12dp"
+                    android:paddingTop="44dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start|bottom"
-                        android:drawablePadding="4dp"
-                        android:gravity="center"
-                        android:text="IMP Team"
-                        android:textColor="@android:color/white"
-                        android:textStyle="bold"
-                        app:drawableStartCompat="@drawable/ic_round_copyright_24" />
+                        android:text="@{viewModel.apodToday.title}"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
 
-                    <ImageButton
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:background="?selectableItemBackgroundBorderless"
-                        android:padding="6dp"
-                        android:src="@drawable/ic_baseline_offline_bolt_24"
-                        android:tint="@color/colorAccent" />
-                </FrameLayout>
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+                        android:maxLines="4"
+                        android:text="@{viewModel.apodToday.explanation}"
+                        android:textColor="#B3FFFFFF" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|bottom"
+                            android:drawablePadding="4dp"
+                            android:gravity="center"
+                            android:text="@{viewModel.apodToday.copyright}"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold"
+                            app:drawableStartCompat="@drawable/ic_round_copyright_24" />
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_baseline_offline_bolt_24"
+                            android:tint="@color/colorAccent" />
+                    </FrameLayout>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
