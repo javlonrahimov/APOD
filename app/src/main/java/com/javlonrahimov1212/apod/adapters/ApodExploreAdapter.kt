@@ -14,7 +14,7 @@ class ApodExploreAdapter(private val photos: List<Photo>) :
     RecyclerView.Adapter<ApodExploreAdapter.ApodExploreViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApodExploreViewHolder {
-        return ApodExploreAdapter.ApodExploreViewHolder(
+        return ApodExploreViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_photo_explore_fragment, parent, false)
         )

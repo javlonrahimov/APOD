@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.javlonrahimov1212.apod.models.Apod
 
-@Database(entities = [Apod::class], version = 1)
+@Database(entities = [Apod::class], version = 1, exportSchema = false)
 abstract class ApodDatabase : RoomDatabase() {
 
     abstract fun apodDao(): ApodDao

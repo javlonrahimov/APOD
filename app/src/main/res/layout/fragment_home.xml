@@ -30,7 +30,7 @@
             android:id="@+id/text_view_day_of_the_week_home_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Saturday"
+            android:text="@{viewModel.dayOfWeek}"
             app:layout_constraintEnd_toStartOf="@id/circle_decorator_home_fragment"
             app:layout_constraintStart_toStartOf="@id/text_view_today_home_fragment"
             app:layout_constraintTop_toBottomOf="@id/text_view_today_home_fragment" />
@@ -50,7 +50,7 @@
             android:id="@+id/text_view_day_of_the_month_home_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="August 22"
+            android:text="@{viewModel.monthAndDay}"
             app:layout_constraintEnd_toEndOf="@id/text_view_today_home_fragment"
             app:layout_constraintStart_toEndOf="@id/circle_decorator_home_fragment"
             app:layout_constraintTop_toBottomOf="@id/text_view_today_home_fragment" />

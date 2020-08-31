@@ -1,24 +1,27 @@
 package com.javlonrahimov1212.apod.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.javlonrahimov1212.apod.models.Apod
 
 @Dao
 interface ApodDao {
 
-    @Insert
-    fun insertApod(vararg apods: Apod)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insertApod(vararg apods: Apod)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertApods(apods: List<Apod>)
 
     @Delete
-    fun deleteApod(apod: Apod)
+    suspend fun deleteApod(apod: Apod)
 
     @Query("SELECT * FROM apod")
     fun getAllApods(): LiveData<List<Apod>>
 
     @Query("SELECT * FROM apod LIMIT 1")
-    fun getNewestApods(): LiveData<Apod>
+    fun getNewestApod(): LiveData<Apod>
+
+    @Query("SELECT * FROM apod LIMIT 30")
+    fun getLast30Apods(): LiveData<List<Apod>>
 }

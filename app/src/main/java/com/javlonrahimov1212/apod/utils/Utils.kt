@@ -1,37 +1,13 @@
 package com.javlonrahimov1212.apod.utils
 
 import android.icu.text.SimpleDateFormat
+import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import java.util.*
 import kotlin.collections.ArrayList
 
-
-enum class Status {
-    SUCCESS,
-    ERROR,
-    LOADING
-}
-
-data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
-    companion object {
-        fun <T> success(data: T): Resource<T> = Resource(
-            status = Status.SUCCESS,
-            data = data,
-            message = null
-        )
-
-        fun <T> error(data: T?, message: String): Resource<T> =
-            Resource(status = Status.ERROR, data = data, message = message)
-
-        fun <T> loading(data: T?): Resource<T> = Resource(
-            status = Status.LOADING,
-            data = data,
-            message = null
-        )
-    }
-}
 
 object BinderAdapter {
     @BindingAdapter("imageReourceId")
@@ -45,9 +21,19 @@ object BinderAdapter {
     @BindingAdapter("imageUrl")
     @JvmStatic
     fun loadRemoteImage(view: ImageView, imageUrl: String?) {
-        Glide.with(view.context)
-            .load(imageUrl)
-            .into(view)
+        if (imageUrl != null) {
+            if (imageUrl.endsWith(".jpg")) {
+                Glide.with(view.context)
+                    .load(imageUrl)
+                    .into(view)
+                Log.d("GLIDING", imageUrl)
+            } else {
+                Glide.with(view.context)
+                    .load(getThumbnailUrl(imageUrl))
+                    .into(view)
+                Log.d("GLIDING", getThumbnailUrl(imageUrl))
+            }
+        }
     }
 }
 
@@ -62,10 +48,15 @@ fun getLast30Days(): List<String> {
     val calendar = Calendar.getInstance()
 
     for (i in 0..30) {
-        calendar.add(Calendar.DAY_OF_YEAR, -i)
+        calendar.add(Calendar.DAY_OF_YEAR, -1)
         result.add(simpleDateFormat.format(calendar.time))
     }
 
     return result
+}
+
+fun getThumbnailUrl(videoUrl: String): String {
+    val videoId = videoUrl.substring(videoUrl.lastIndexOf("/") + 1).substring(0, 11)
+    return "http://img.youtube.com/vi/$videoId/sddefault.jpg"
 }
 

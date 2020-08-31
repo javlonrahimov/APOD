@@ -1,22 +1,48 @@
 package com.javlonrahimov1212.apod.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.javlonrahimov1212.apod.models.Apod
 import com.javlonrahimov1212.apod.repository.MainRepository
 import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
-    private val _apodToday = MutableLiveData<Apod>()
-    val apodToday: LiveData<Apod>
-        get() = _apodToday
+    val apodToday: LiveData<Apod> = mainRepository.getApodToday()
+    val dayOfWeek = liveData<String> {
+        val calendar = Calendar.getInstance()
+        val date = calendar.time
+        emit(SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.time))
+    }
 
-    init {
-        viewModelScope.launch {
-            _apodToday.value = mainRepository.getApodToday()
+    val monthAndDay = liveData {
+        val c = Calendar.getInstance()
+        val monthName = arrayOf(
+            "January", "February", "March", "April", "May", "June", "July",
+            "August", "September", "October", "November",
+            "December"
+        )
+        val month = monthName[c[Calendar.MONTH]]
+
+        emit(month + " " + c[Calendar.DAY_OF_MONTH])
+    }
+
+    fun setApodToday() = viewModelScope.launch {
+        try {
+            mainRepository.setApodToday()
+        } catch (unknownHostException: UnknownHostException) {
+            Log.d("TAG_HOME_VIEW_MODEL", unknownHostException.message.toString())
+        } catch (socketTimeOutException: SocketTimeoutException) {
+            Log.d("TAG_HOME_VIEW_MODEL", socketTimeOutException.message.toString())
+        } catch (e: Exception) {
+            Log.d("TAG_HOME_VIEW_MODEL", e.message.toString())
         }
     }
 }

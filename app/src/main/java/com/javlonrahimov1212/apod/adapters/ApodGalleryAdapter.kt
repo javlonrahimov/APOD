@@ -1,5 +1,6 @@
 package com.javlonrahimov1212.apod.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.javlonrahimov1212.apod.R
 import com.javlonrahimov1212.apod.models.Apod
+import com.javlonrahimov1212.apod.utils.getThumbnailUrl
 import kotlinx.android.synthetic.main.item_apod_gallery.view.*
 
-class ApodGalleryAdapter(val apods: List<Apod>) :
+class ApodGalleryAdapter(private val apods: List<Apod>) :
     RecyclerView.Adapter<ApodGalleryAdapter.ApodGalleryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApodGalleryViewHolder {
@@ -35,7 +37,17 @@ class ApodGalleryAdapter(val apods: List<Apod>) :
         private val apodCopyright: TextView = itemView.copyright_item_apod
 
         fun bindData(apod: Apod) {
-            Glide.with(apodImage).load(apod.url).into(apodImage)
+            if (apod.url.endsWith(".jpg"))
+                Glide.with(apodImage.context)
+                    .load(apod.url)
+                    .into(apodImage)
+            else {
+                Glide.with(apodImage.context)
+                    .load(getThumbnailUrl(apod.url))
+                    .into(apodImage)
+                Log.d("GLIDING", getThumbnailUrl(apod.url))
+            }
+//            Glide.with(apodImage).load(apod.url).into(apodImage)
             apodTitle.text = apod.title
             apodDescription.text = apod.explanation
             apodCopyright.text = apod.copyright
