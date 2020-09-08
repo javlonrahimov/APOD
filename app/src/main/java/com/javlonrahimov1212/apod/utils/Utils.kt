@@ -60,3 +60,10 @@ fun getThumbnailUrl(videoUrl: String): String {
     return "http://img.youtube.com/vi/$videoId/sddefault.jpg"
 }
 
+fun getWebPage(apodDate: String): String {
+    val list = apodDate.split("-")
+    val baseUrl = "https://apod.nasa.gov/apod/"
+    val page = "ap${list[0].substring(2)}${list[1]}${list[2]}.html"
+
+    return baseUrl + page
+}

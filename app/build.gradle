@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 30
@@ -80,6 +81,11 @@ dependencies {
 
     //Room
     implementation "androidx.room:room-runtime:2.2.5"
+    debugImplementation 'com.idescout.sql:sqlscout-server:4.1'
     kapt "androidx.room:room-compiler:2.2.5"
     implementation "androidx.room:room-ktx:2.2.5"
+
+    //Loupe
+    implementation 'com.igreenwood.loupe:loupe:1.2.1'
+    implementation 'com.igreenwood.loupe:extensions:1.0.0'
 }

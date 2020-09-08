@@ -56,6 +56,7 @@
             app:layout_constraintTop_toBottomOf="@id/text_view_today_home_fragment" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_view_apod_fragment_home"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="22dp"
@@ -120,6 +121,7 @@
                             android:text="@{viewModel.apodToday.copyright}"
                             android:textColor="@android:color/white"
                             android:textStyle="bold"
+                            android:drawableTint="@color/colorAccent"
                             app:drawableStartCompat="@drawable/ic_round_copyright_24" />
 
                         <ImageButton
@@ -128,7 +130,7 @@
                             android:layout_gravity="end"
                             android:background="?selectableItemBackgroundBorderless"
                             android:padding="6dp"
-                            android:src="@drawable/ic_baseline_offline_bolt_24"
+                            android:src="@drawable/ic_round_favorite_border_24"
                             android:tint="@color/colorAccent" />
                     </FrameLayout>
                 </LinearLayout>

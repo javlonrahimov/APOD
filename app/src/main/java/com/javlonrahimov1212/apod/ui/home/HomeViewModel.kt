@@ -42,7 +42,7 @@ class HomeViewModel(private val mainRepository: MainRepository) : ViewModel() {
         } catch (socketTimeOutException: SocketTimeoutException) {
             Log.d("TAG_HOME_VIEW_MODEL", socketTimeOutException.message.toString())
         } catch (e: Exception) {
-            Log.d("TAG_HOME_VIEW_MODEL", e.message.toString())
+            Log.d("TAG_HOME_VIEW_MODEL", "Exeption" + e.message.toString())
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.javlonrahimov1212.apod.ui.gallery
 
+import android.content.Intent
+import android.icu.util.TimeZone
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.javlonrahimov1212.apod.adapters.ApodGalleryAdapter
+import com.javlonrahimov1212.apod.adapters.OnItemClicked
 import com.javlonrahimov1212.apod.database.ApodDatabase
 import com.javlonrahimov1212.apod.databinding.FragmentGalleryBinding
 import com.javlonrahimov1212.apod.retrofit.ApiHelper
 import com.javlonrahimov1212.apod.retrofit.RetrofitBuilder
+import com.javlonrahimov1212.apod.ui.DetailsActivity
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
@@ -43,10 +49,26 @@ class GalleryFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.apod30Days.observe(viewLifecycleOwner, {
-            binding.apodViewPager.adapter = ApodGalleryAdapter(it)
+            val adapter = ApodGalleryAdapter(it)
+            adapter.onItemClicked = object : OnItemClicked {
+                override fun onClick(date: String) {
+                    val intent =
+                        Intent(requireActivity().applicationContext, DetailsActivity::class.java)
+                    intent.putExtra("APOD_KEY", date)
+                    startActivity(intent)
+                }
+            }
+            binding.apodViewPager.adapter = adapter
             if (it.size < 30)
                 viewModel.setLast30Apods()
         })
+        binding.datePickerGalleryFragment.setOnClickListener {
+            val date = showDatePicker()
+            val intent =
+                Intent(requireActivity().applicationContext, DetailsActivity::class.java)
+            intent.putExtra("APOD_KEY", date)
+            startActivity(intent)
+        }
         setUpViewPager(binding)
         return binding.root
     }
@@ -91,6 +113,43 @@ class GalleryFragment : Fragment() {
                 ApodDatabase.getDatabase(requireActivity().applicationContext).apodDao()
             )
         ).get(GalleryViewModel::class.java)
+    }
+
+    private fun showDatePicker(): String {
+
+        var selectedDate = ""
+
+        val calendar = android.icu.util.Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        calendar.clear()
+
+        val today = MaterialDatePicker.todayInUtcMilliseconds()
+
+        val constraints = CalendarConstraints.Builder()
+
+        val calendarStart: Calendar = GregorianCalendar.getInstance()
+
+        calendarStart.set(2015, 1, 1)
+
+        val minDate = calendarStart.timeInMillis
+
+        constraints.setStart(minDate)
+        constraints.setEnd(today)
+
+        val builder = MaterialDatePicker.Builder.datePicker()
+        builder.setTitleText("SELECT A DATE")
+            .setCalendarConstraints(constraints.build())
+            .setSelection(today)
+
+        val materialDatePicker = builder.build()
+
+        materialDatePicker.addOnPositiveButtonClickListener {
+            val simpleDateFormat = android.icu.text.SimpleDateFormat("yyyy-MM-dd", Locale.US)
+            selectedDate = simpleDateFormat.format(Date(it))
+        }
+
+        materialDatePicker.show(childFragmentManager, "DATE_PICKER")
+
+        return selectedDate
     }
 
 }

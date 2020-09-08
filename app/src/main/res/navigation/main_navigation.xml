@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_home_to_preferences"
             app:destination="@+id/preferencesFragment" />
+        <action
+            android:id="@+id/action_id_home_to_id_preferences"
+            app:destination="@id/id_preferences" />
     </fragment>
     <fragment
         android:id="@+id/id_gallery"

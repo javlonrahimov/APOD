@@ -61,6 +61,7 @@
             </LinearLayout>
 
             <ImageButton
+                android:id="@+id/date_picker_gallery_fragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
