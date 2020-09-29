@@ -5,37 +5,52 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.javlonrahimov1212.apod.R
 import com.javlonrahimov1212.apod.models.Apod
 import com.javlonrahimov1212.apod.utils.getThumbnailUrl
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.item_apod_gallery.view.*
 
-class ApodGalleryAdapter(val apods: List<Apod>) :
+
+class ApodGalleryAdapter() :
     RecyclerView.Adapter<ApodGalleryAdapter.ApodGalleryViewHolder>() {
 
-    var onItemClicked: OnItemClicked? = null
+    var onItemClickedGalleryAdapter: OnItemClickedGalleryAdapter? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApodGalleryViewHolder {
         return ApodGalleryViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_apod_gallery, parent, false),
-            onItemClicked
+            onItemClickedGalleryAdapter
         )
     }
+
+    private var apods: List<Apod> = ArrayList()
 
     override fun getItemCount(): Int {
         return apods.size
     }
 
     override fun onBindViewHolder(holder: ApodGalleryViewHolder, position: Int) {
-        holder.bindData(apods[position])
+        holder.bindData(apods[position], position)
+    }
+
+    fun submitList(apods: List<Apod>) {
+
+        val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(
+            ApodGalleryAdapterDiffCallback(
+                this.apods,
+                apods
+            )
+        )
+        this.apods = apods
+        diffResult.dispatchUpdatesTo(this)
     }
 
     class ApodGalleryViewHolder(
         itemView: View,
-        var onItemClicked: OnItemClicked?
+        var onItemClickedGalleryAdapter: OnItemClickedGalleryAdapter?
     ) :
         RecyclerView.ViewHolder(itemView) {
         private val apodImage: ImageView = itemView.image_item_apod
@@ -43,27 +58,68 @@ class ApodGalleryAdapter(val apods: List<Apod>) :
         private val apodDescription: TextView = itemView.description_item_apod
         private val apodCopyright: TextView = itemView.copyright_item_apod
 
-        fun bindData(apod: Apod) {
-            if (apod.url.endsWith(".jpg"))
-                Glide.with(apodImage.context)
-                    .load(apod.url)
-                    .into(apodImage)
-            else {
-                Glide.with(apodImage.context)
-                    .load(getThumbnailUrl(apod.url))
-                    .into(apodImage)
+        fun bindData(apod: Apod, position: Int) {
+            when {
+                apod.url.endsWith(".jpg") -> {
+                    Glide.with(apodImage.context)
+                        .load(apod.url)
+                        .placeholder(R.drawable.transparent)
+                        .into(apodImage)
+                }
+                apod.url.contains("youtube") -> {
+                    Glide.with(apodImage.context)
+                        .load(getThumbnailUrl(apod.url))
+                        .placeholder(R.drawable.transparent)
+                        .into(apodImage)
+                }
+                else -> {
+                    apodImage.setImageResource(R.drawable.transparent)
+                }
             }
             apodTitle.text = apod.title
             apodDescription.text = apod.explanation
             apodCopyright.text = apod.copyright
+
+            if (apod.isLiked) {
+                itemView.fav_button_item_apod_gallery.setImageResource(R.drawable.ic_round_favorite_24)
+            } else {
+                itemView.fav_button_item_apod_gallery.setImageResource(R.drawable.ic_round_favorite_border_24)
+            }
+
             itemView.setOnClickListener {
-                onItemClicked?.onClick(apod.date)
+                onItemClickedGalleryAdapter?.onClick(apod.date)
+            }
+            itemView.fav_button_item_apod_gallery.setOnClickListener {
+                onItemClickedGalleryAdapter?.onFavButtonClicked(position)
             }
 
         }
     }
 }
 
-interface OnItemClicked {
+interface OnItemClickedGalleryAdapter {
+
     fun onClick(date: String)
+
+    fun onFavButtonClicked(position: Int)
+}
+
+class ApodGalleryAdapterDiffCallback(var oldList: List<Apod>, var newList: List<Apod>) :
+    DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int {
+        return oldList.size
+    }
+
+    override fun getNewListSize(): Int {
+        return newList.size
+    }
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].url == newList[newItemPosition].url
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == (newList[newItemPosition])
+    }
 }

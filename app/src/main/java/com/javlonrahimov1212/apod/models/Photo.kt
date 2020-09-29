@@ -1,3 +1,10 @@
 package com.javlonrahimov1212.apod.models
 
-data class Photo(val title: String, val url: Int, val description: String)
+import java.io.Serializable
+
+data class Photo(
+    val title: String,
+    val description: String,
+    val url: String,
+    val dateCreated: String
+) : Serializable

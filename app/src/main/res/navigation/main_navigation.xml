@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/id_explore"
-        android:name="com.javlonrahimov1212.apod.ui.explore.LibraryFragment"
+        android:name="com.javlonrahimov1212.apod.ui.explore.ExploreFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_explore" />
 </navigation>

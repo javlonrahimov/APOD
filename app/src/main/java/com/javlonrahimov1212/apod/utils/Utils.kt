@@ -1,12 +1,16 @@
 package com.javlonrahimov1212.apod.utils
 
-import android.icu.text.SimpleDateFormat
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.media.MediaMetadataRetriever
 import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
+import com.javlonrahimov1212.apod.R
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 object BinderAdapter {
@@ -22,37 +26,26 @@ object BinderAdapter {
     @JvmStatic
     fun loadRemoteImage(view: ImageView, imageUrl: String?) {
         if (imageUrl != null) {
-            if (imageUrl.endsWith(".jpg")) {
-                Glide.with(view.context)
-                    .load(imageUrl)
-                    .into(view)
-                Log.d("GLIDING", imageUrl)
-            } else {
-                Glide.with(view.context)
-                    .load(getThumbnailUrl(imageUrl))
-                    .into(view)
-                Log.d("GLIDING", getThumbnailUrl(imageUrl))
+            when {
+                imageUrl.endsWith(".jpg") -> {
+                    Glide.with(view.context)
+                        .load(imageUrl)
+                        .placeholder(R.drawable.transparent)
+                        .into(view)
+                    Log.d("GLIDING", imageUrl)
+                }
+                imageUrl.contains("youtube") -> {
+                    Glide.with(view.context)
+                        .load(getThumbnailUrl(imageUrl))
+                        .placeholder(R.drawable.transparent)
+                        .into(view)
+                }
+                else -> {
+                    view.setImageResource(R.drawable.transparent)
+                }
             }
         }
     }
-}
-
-fun getCurrentDate(): String {
-    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-    return simpleDateFormat.format(Date())
-}
-
-fun getLast30Days(): List<String> {
-    val result = ArrayList<String>()
-    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-    val calendar = Calendar.getInstance()
-
-    for (i in 0..30) {
-        calendar.add(Calendar.DAY_OF_YEAR, -1)
-        result.add(simpleDateFormat.format(calendar.time))
-    }
-
-    return result
 }
 
 fun getThumbnailUrl(videoUrl: String): String {

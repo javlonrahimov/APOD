@@ -73,10 +73,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.flaviofaria.kenburnsview.KenBurnsView
+                <ImageView
                     android:id="@+id/test_id"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
                     app:imageUrl="@{viewModel.apodToday.url}"
                     tools:src="@drawable/image" />
 
@@ -117,14 +118,15 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start|bottom"
                             android:drawablePadding="4dp"
+                            android:drawableTint="@color/colorAccent"
                             android:gravity="center"
                             android:text="@{viewModel.apodToday.copyright}"
                             android:textColor="@android:color/white"
                             android:textStyle="bold"
-                            android:drawableTint="@color/colorAccent"
                             app:drawableStartCompat="@drawable/ic_round_copyright_24" />
 
                         <ImageButton
+                            android:id="@+id/fav_button_apod_home_fragment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"

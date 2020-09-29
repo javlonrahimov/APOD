@@ -6,12 +6,7 @@
     android:background="#000000"
     tools:context=".ui.fullscreen_image.ImageFullscreenFragment">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-  <ImageView
+  <com.github.chrisbanes.photoview.PhotoView
       android:id="@+id/image_fullscreen_fragment"
       tools:src="@drawable/image"
       android:layout_width="match_parent"

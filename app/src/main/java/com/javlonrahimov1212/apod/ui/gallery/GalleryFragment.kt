@@ -3,6 +3,7 @@ package com.javlonrahimov1212.apod.ui.gallery
 import android.content.Intent
 import android.icu.util.TimeZone
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +14,14 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.javlonrahimov1212.apod.adapters.ApodGalleryAdapter
-import com.javlonrahimov1212.apod.adapters.OnItemClicked
+import com.javlonrahimov1212.apod.adapters.OnItemClickedGalleryAdapter
 import com.javlonrahimov1212.apod.database.ApodDatabase
 import com.javlonrahimov1212.apod.databinding.FragmentGalleryBinding
 import com.javlonrahimov1212.apod.retrofit.ApiHelper
-import com.javlonrahimov1212.apod.retrofit.RetrofitBuilder
+import com.javlonrahimov1212.apod.retrofit.RetrofitBuilderApod
 import com.javlonrahimov1212.apod.ui.DetailsActivity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,27 +50,36 @@ class GalleryFragment : Fragment() {
         setupViewModel()
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        val adapter = ApodGalleryAdapter()
+        binding.apodViewPager.adapter = adapter
         viewModel.apod30Days.observe(viewLifecycleOwner, {
-            val adapter = ApodGalleryAdapter(it)
-            adapter.onItemClicked = object : OnItemClicked {
+            adapter.submitList(it)
+            adapter.onItemClickedGalleryAdapter = object : OnItemClickedGalleryAdapter {
                 override fun onClick(date: String) {
                     val intent =
                         Intent(requireActivity().applicationContext, DetailsActivity::class.java)
-                    intent.putExtra("APOD_KEY", date)
+                    intent.putExtra(DetailsActivity.APOD_DATE_KEY, date)
                     startActivity(intent)
                 }
+
+                override fun onFavButtonClicked(position: Int) {
+                    val apod = it[position]
+                    apod.isLiked = !apod.isLiked
+                    viewModel.updateApod(apod)
+                    adapter.notifyItemChanged(position)
+                }
             }
-            binding.apodViewPager.adapter = adapter
             if (it.size < 30)
                 viewModel.setLast30Apods()
         })
         binding.datePickerGalleryFragment.setOnClickListener {
-            val date = showDatePicker()
-            val intent =
-                Intent(requireActivity().applicationContext, DetailsActivity::class.java)
-            intent.putExtra("APOD_KEY", date)
-            startActivity(intent)
+            showDatePicker()
         }
+
+        binding.jumpToFirstGalleryFragment.setOnClickListener {
+            binding.apodViewPager.setCurrentItem(0, true)
+        }
+
         setUpViewPager(binding)
         return binding.root
     }
@@ -109,13 +120,13 @@ class GalleryFragment : Fragment() {
         viewModel = ViewModelProviders.of(
             this,
             GalleryViewModelFactory(
-                ApiHelper(RetrofitBuilder.apiService),
+                ApiHelper(RetrofitBuilderApod.apiService),
                 ApodDatabase.getDatabase(requireActivity().applicationContext).apodDao()
             )
         ).get(GalleryViewModel::class.java)
     }
 
-    private fun showDatePicker(): String {
+    private fun showDatePicker() {
 
         var selectedDate = ""
 
@@ -123,6 +134,8 @@ class GalleryFragment : Fragment() {
         calendar.clear()
 
         val today = MaterialDatePicker.todayInUtcMilliseconds()
+
+        calendar.timeInMillis = today
 
         val constraints = CalendarConstraints.Builder()
 
@@ -134,6 +147,7 @@ class GalleryFragment : Fragment() {
 
         constraints.setStart(minDate)
         constraints.setEnd(today)
+        constraints.setValidator(DateValidatorPointBackward.now())
 
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setTitleText("SELECT A DATE")
@@ -145,11 +159,13 @@ class GalleryFragment : Fragment() {
         materialDatePicker.addOnPositiveButtonClickListener {
             val simpleDateFormat = android.icu.text.SimpleDateFormat("yyyy-MM-dd", Locale.US)
             selectedDate = simpleDateFormat.format(Date(it))
+            val intent =
+                Intent(requireActivity().applicationContext, DetailsActivity::class.java)
+            intent.putExtra("APOD_KEY", selectedDate)
+            startActivity(intent)
         }
 
         materialDatePicker.show(childFragmentManager, "DATE_PICKER")
-
-        return selectedDate
     }
 
 }

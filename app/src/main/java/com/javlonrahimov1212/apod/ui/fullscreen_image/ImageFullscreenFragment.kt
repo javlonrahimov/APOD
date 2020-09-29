@@ -61,7 +61,6 @@ class ImageFullscreenFragment : Fragment() {
         false
     }
 
-    private var dummyButton: Button? = null
     private var fullscreenContent: View? = null
     private var fullscreenContentControls: View? = null
 
@@ -119,7 +118,6 @@ class ImageFullscreenFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        dummyButton = null
         fullscreenContent = null
         fullscreenContentControls = null
     }

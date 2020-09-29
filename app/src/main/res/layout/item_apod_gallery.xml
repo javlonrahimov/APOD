@@ -68,8 +68,9 @@
                     app:drawableStartCompat="@drawable/ic_round_copyright_24" />
 
                 <ImageButton
+                    android:id="@+id/fav_button_item_apod_gallery"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:background="?selectableItemBackgroundBorderless"
                     android:padding="6dp"
