@@ -11,6 +11,7 @@ class MainRepository(private val apiHelper: ApiHelper, private val apodDao: Apod
     fun getApodToday() = apodDao.getNewestApod()
     fun getLast30Apods() = apodDao.getLast30Apods()
     fun getApodByDate(date: String) = apodDao.getApodByDate(date)
+    fun getFavouritesApod() = apodDao.getFavouriteApods(true)
 
     suspend fun setApodToday() {
         if (!apodDao.exists(getCurrentDate())) {
@@ -51,9 +52,7 @@ class MainRepository(private val apiHelper: ApiHelper, private val apodDao: Apod
         }
     }
 
-    suspend fun getSearchResults(query: String) = apiHelper.getSearchResults(query)
-
-    suspend fun updateApod(apod: Apod){
+    suspend fun updateApod(apod: Apod) {
         apodDao.updateApod(apod)
     }
 

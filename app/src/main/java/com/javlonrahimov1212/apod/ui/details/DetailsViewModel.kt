@@ -29,21 +29,9 @@ import java.net.UnknownHostException
 class DetailsViewModel(
     private val mainRepository: MainRepository, apodDate: String,
     private val myApplication: Application,
-    private val apodR: Serializable?
 ) : AndroidViewModel(myApplication) {
 
-    private var title = ""
-    private var url = ""
-
     var apod = mainRepository.getApodByDate(apodDate)
-        get() {
-            if (apodR != null) {
-                url = (apodR as Apod).url
-                title = apodR.title
-                return liveData { emit(apodR) }
-            }
-            return field
-        }
 
     init {
         viewModelScope.launch {
@@ -65,13 +53,9 @@ class DetailsViewModel(
 
     @Throws(IOException::class)
     fun saveImage() {
-        if (apod.value != null) {
-            url = apod.value!!.url
-            title = apod.value!!.title
-        }
         Glide.with(myApplication)
             .asBitmap()
-            .load(url)
+            .load(apod.value!!.url)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(bitmap: Bitmap, transition: Transition<in Bitmap>?) {
                     val saved: Boolean
@@ -79,7 +63,7 @@ class DetailsViewModel(
                     fos = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         val resolver = myApplication.contentResolver
                         val contentValues = ContentValues()
-                        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, title)
+                        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, apod.value!!.title)
                         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
                         contentValues.put(
                             MediaStore.MediaColumns.RELATIVE_PATH,
@@ -99,7 +83,7 @@ class DetailsViewModel(
                         if (!file.exists()) {
                             file.mkdir()
                         }
-                        val image = File(imagesDir, "${title}.png")
+                        val image = File(imagesDir, "${apod.value!!.title}.png")
                         FileOutputStream(image)
                     }
                     saved = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)

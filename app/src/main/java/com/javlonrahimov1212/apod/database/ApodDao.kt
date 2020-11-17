@@ -57,4 +57,7 @@ interface ApodDao {
 
     @Query("SELECT EXISTS (SELECT * FROM apod WHERE date = :date)")
     suspend fun exists(date: String): Boolean
+
+    @Query("SELECT * FROM apod  WHERE isLiked == :bool ORDER BY date DESC")
+    fun getFavouriteApods(bool: Boolean) : LiveData<List<Apod>>
 }

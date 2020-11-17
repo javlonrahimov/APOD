@@ -16,17 +16,3 @@ object RetrofitBuilderApod {
 
     val apiService: ApiService = getRetrofit().create(ApiService::class.java)
 }
-
-object RetrofitBuilderSearch {
-
-    private const val BASE_URL = "https://images-api.nasa.gov/"
-
-    private fun getRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    val apiService: ApiService = getRetrofit().create(ApiService::class.java)
-}

@@ -14,6 +14,4 @@ class ApiHelper(private val apiService: ApiService) {
     }
 
     suspend fun getApodByDate(date: String) = apiService.getApodByDate(date)
-
-    suspend fun getSearchResults(query: String) = apiService.getSearchResults(query, "image")
 }

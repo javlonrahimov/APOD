@@ -10,12 +10,11 @@ class DetailsViewModelFactory(
     private val mainRepository: MainRepository,
     private val apodDate: String,
     private val application: Application,
-    private val apod: Serializable?
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DetailsViewModel::class.java)) {
-            return DetailsViewModel(mainRepository, apodDate, application, apod) as T
+            return DetailsViewModel(mainRepository, apodDate, application) as T
         }
         throw IllegalArgumentException("Unknown class name")
     }

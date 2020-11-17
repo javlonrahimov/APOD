@@ -10,9 +10,6 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_home_to_preferences"
-            app:destination="@+id/preferencesFragment" />
-        <action
             android:id="@+id/action_id_home_to_id_preferences"
             app:destination="@id/id_preferences" />
     </fragment>
@@ -22,8 +19,8 @@
         android:label="fragment_gallery"
         tools:layout="@layout/fragment_gallery">
         <action
-            android:id="@+id/action_gallery_to_library"
-            app:destination="@id/id_explore" />
+            android:id="@+id/action_id_gallery_to_id_favourites"
+            app:destination="@id/id_favourites" />
     </fragment>
     <fragment
         android:id="@+id/id_preferences"
@@ -35,8 +32,12 @@
             app:destination="@id/id_gallery" />
     </fragment>
     <fragment
-        android:id="@+id/id_explore"
-        android:name="com.javlonrahimov1212.apod.ui.explore.ExploreFragment"
-        android:label="fragment_library"
-        tools:layout="@layout/fragment_explore" />
+        android:id="@+id/id_favourites"
+        android:name="com.javlonrahimov1212.apod.ui.favourite.FavouriteFragment"
+        android:label="fragment_favourite"
+        tools:layout="@layout/fragment_favourite" >
+        <action
+            android:id="@+id/action_id_favourites_to_id_home"
+            app:destination="@id/id_home" />
+    </fragment>
 </navigation>

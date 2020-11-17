@@ -125,7 +125,6 @@ class DetailsFragment : Fragment() {
                 ),
                 (activity as DetailsActivity).apodDate,
                 requireActivity().application,
-                (activity as DetailsActivity).apod
             )
         ).get(DetailsViewModel::class.java)
     }

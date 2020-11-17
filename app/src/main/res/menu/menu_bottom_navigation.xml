@@ -8,9 +8,11 @@
         android:title="Home" />
 
     <item
-        android:id="@+id/id_explore"
-        android:icon="@drawable/ic_baseline_explore_24"
-        android:title="Explore" />
+        android:id="@+id/id_favourites"
+        android:enabled="true"
+        android:icon="@drawable/ic_round_favorite_24"
+        android:title="Favourites" />
+
 
     <item
         android:id="@+id/id_gallery"
