@@ -62,7 +62,7 @@ class GalleryFragment : Fragment() {
         }
         viewModel.apod30Days.observe(viewLifecycleOwner, {
             adapter.submitList(it)
-            if (it.size < 30)
+            if (it.size < 9)
                 viewModel.setLast30Apods()
         })
         binding.datePickerGalleryFragment.setOnClickListener {
