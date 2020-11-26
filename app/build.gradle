@@ -12,7 +12,7 @@ android {
         applicationId "com.javlonrahimov1212.apod"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 1
+        versionCode 3
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -91,4 +91,7 @@ dependencies {
 
     //PhotoView
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
+    //DataStore preference
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha04"
 }

@@ -1,7 +1,9 @@
 package com.javlonrahimov1212.apod.ui.favourite
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +17,7 @@ import com.javlonrahimov1212.apod.adapters.ApodGalleryAdapter
 import com.javlonrahimov1212.apod.adapters.OnItemClickedGalleryAdapter
 import com.javlonrahimov1212.apod.database.ApodDatabase
 import com.javlonrahimov1212.apod.databinding.FragmentFavouriteBinding
+import com.javlonrahimov1212.apod.models.Apod
 import com.javlonrahimov1212.apod.retrofit.ApiHelper
 import com.javlonrahimov1212.apod.retrofit.RetrofitBuilderApod
 import com.javlonrahimov1212.apod.ui.DetailsActivity
@@ -43,25 +46,24 @@ class FavouriteFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         val adapter = ApodGalleryAdapter()
         binding.apodViewPagerFavouriteFragment.adapter = adapter
-        viewModel.favoritesApod.observe(viewLifecycleOwner, {
-            adapter.submitList(it)
-            adapter.onItemClickedGalleryAdapter = object : OnItemClickedGalleryAdapter {
-                override fun onClick(date: String) {
-                    val intent =
-                        Intent(requireActivity().applicationContext, DetailsActivity::class.java)
-                    intent.putExtra(DetailsActivity.APOD_DATE_KEY, date)
-                    startActivity(intent)
-                }
+        adapter.onItemClickedGalleryAdapter = object : OnItemClickedGalleryAdapter {
+            override fun onClick(date: String) {
+                val intent =
+                    Intent(requireActivity().applicationContext, DetailsActivity::class.java)
+                intent.putExtra(DetailsActivity.APOD_DATE_KEY, date)
+                startActivity(intent)
+            }
 
-                override fun onFavButtonClicked(position: Int) {
-                    val apod = it[position]
-                    apod.isLiked = !apod.isLiked
-                    viewModel.updateApod(apod)
-                    if (position == 0)
-                        binding.apodViewPagerFavouriteFragment.setCurrentItem(0, true)
-                   // else
-                        //binding.apodViewPagerFavouriteFragment.setCurrentItem(position - 1, true)
-                }
+            override fun onFavButtonClicked(apod: Apod) {
+                viewModel.updateApod(apod.copy(isLiked = false))
+            }
+        }
+        viewModel.favoritesApod.observe(viewLifecycleOwner, {
+            adapter.submitListFav(it)
+            if (it.isEmpty()){
+                binding.noFavText.visibility = View.VISIBLE
+            }else{
+                binding.noFavText.visibility = View.GONE
             }
         })
         setUpViewPager(binding)
@@ -84,19 +86,24 @@ class FavouriteFragment : Fragment() {
 
         binding.apodViewPagerFavouriteFragment.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
+            @SuppressLint("SetTextI18n")
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                val currentDate = viewModel.favoritesApod.value!![position].date
-                val dateArray = currentDate.split("-")
-                calendar.set(Calendar.DAY_OF_MONTH, dateArray[2].toInt())
-                calendar.set(Calendar.MONTH, dateArray[1].toInt() - 1)
-                calendar.set(Calendar.YEAR, dateArray[0].toInt())
-                val date = calendar.time
-                binding.dayOfWeekFavouriteFragment.text =
-                    SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.time)
-                val month = monthName[calendar[Calendar.MONTH]]
-                binding.dayOfMonthFavouritesFragment.text =
-                    month + " " + calendar[Calendar.DAY_OF_MONTH]
+                if (viewModel.favoritesApod.value!!.isNotEmpty()) {
+                    val currentDate = viewModel.favoritesApod.value!![position].date
+                    val dateArray = currentDate.split("-")
+                    calendar.set(Calendar.DAY_OF_MONTH, dateArray[2].toInt())
+                    calendar.set(Calendar.MONTH, dateArray[1].toInt() - 1)
+                    calendar.set(Calendar.YEAR, dateArray[0].toInt())
+                    val date = calendar.time
+                    binding.dayOfWeekFavouriteFragment.text =
+                        SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.time)
+                    val month = monthName[calendar[Calendar.MONTH]]
+                    binding.dayOfMonthFavouritesFragment.text =
+                        month + " " + calendar[Calendar.DAY_OF_MONTH]
+                }else{
+
+                }
             }
         })
     }

@@ -1,26 +1,14 @@
 package com.javlonrahimov1212.apod.utils
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.media.MediaMetadataRetriever
-import android.util.Log
+import android.app.Activity
+import android.content.res.Configuration
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import com.javlonrahimov1212.apod.R
-import java.util.*
 
 
 object BinderAdapter {
-    @BindingAdapter("imageReourceId")
-    @JvmStatic
-    fun loadResourceImage(view: ImageView, imageId: Int) {
-        Glide.with(view.context)
-            .load(imageId)
-            .into(view)
-    }
 
     @BindingAdapter("imageUrl")
     @JvmStatic
@@ -32,7 +20,6 @@ object BinderAdapter {
                         .load(imageUrl)
                         .placeholder(R.drawable.transparent)
                         .into(view)
-                    Log.d("GLIDING", imageUrl)
                 }
                 imageUrl.contains("youtube") -> {
                     Glide.with(view.context)
@@ -59,4 +46,16 @@ fun getWebPage(apodDate: String): String {
     val page = "ap${list[0].substring(2)}${list[1]}${list[2]}.html"
 
     return baseUrl + page
+}
+
+fun isDarkTheme(activity: Activity): Boolean {
+    return activity.resources.configuration.uiMode and
+            Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+}
+
+enum class AppTheme{
+    SYSTEM_DEFAULT,
+    DARK,
+    LIGHT,
+    NONE
 }

@@ -7,33 +7,13 @@ import com.javlonrahimov1212.apod.models.Apod
 @Dao
 interface ApodDao {
 
-    @Query("INSERT INTO Apod (copyright, date, explanation, hdurl, media_type, service_version, title, url, isLiked) VALUES(:copyright,:date,:explanation,:hdUrl,:media_type, :service_version, :title, :url, :is_liked)")
-    suspend fun insertApod(
-        copyright: String,
-        date: String,
-        explanation: String,
-        hdUrl: String,
-        media_type: String,
-        service_version: String,
-        title: String,
-        url: String,
-        is_liked: Boolean
-    )
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertApod(apod: Apod)
 
     @Transaction
     suspend fun insertApods(apods: List<Apod>) {
         for (i in apods) {
-            insertApod(
-                copyright = i.copyright,
-                date = i.date,
-                explanation = i.explanation,
-                hdUrl = i.hdUrl,
-                media_type = i.media_type,
-                service_version = i.service_version,
-                title = i.title,
-                url = i.url,
-                is_liked = i.isLiked
-            )
+            insertApod(i)
         }
     }
 
@@ -59,5 +39,5 @@ interface ApodDao {
     suspend fun exists(date: String): Boolean
 
     @Query("SELECT * FROM apod  WHERE isLiked == :bool ORDER BY date DESC")
-    fun getFavouriteApods(bool: Boolean) : LiveData<List<Apod>>
+    fun getFavouriteApods(bool: Boolean): LiveData<List<Apod>>
 }

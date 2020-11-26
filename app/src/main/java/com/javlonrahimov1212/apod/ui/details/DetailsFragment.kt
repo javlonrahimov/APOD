@@ -1,6 +1,8 @@
 package com.javlonrahimov1212.apod.ui.details
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.ClipData
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -22,16 +24,16 @@ import com.javlonrahimov1212.apod.repository.MainRepository
 import com.javlonrahimov1212.apod.retrofit.ApiHelper
 import com.javlonrahimov1212.apod.retrofit.RetrofitBuilderApod
 import com.javlonrahimov1212.apod.ui.DetailsActivity
+import com.javlonrahimov1212.apod.ui.bottomsheet.BottomSheetMoreFragment
 import com.javlonrahimov1212.apod.utils.getWebPage
 
 
 class DetailsFragment : Fragment() {
 
-    private val REQUEST_STORAGE_PERMISSION = 0
-
     private lateinit var viewModel: DetailsViewModel
     lateinit var apod: Apod
 
+    @SuppressLint("QueryPermissionsNeeded")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -80,14 +82,28 @@ class DetailsFragment : Fragment() {
             startActivity(shareIntent)
         }
 
-        binding.openButtonApodDetailsFragment.setOnClickListener {
-            val urlString = getWebPage(viewModel.apod.value!!.date)
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(urlString)
-            val title = "Select browser"
-            val chooser = Intent.createChooser(intent, title)
-            if (intent.resolveActivity(requireActivity().packageManager) != null)
-                startActivity(chooser)
+        binding.moreButtonApodDetailsFragment.setOnClickListener {
+            activity?.supportFragmentManager.let {
+                BottomSheetMoreFragment.newInstance(Bundle()).apply {
+                    show(it!!, tag)
+                    mListener = object : BottomSheetMoreFragment.ItemClickListener {
+                        override fun onItemClick(item: String) {
+                            when (item) {
+                                "open_in" -> {
+                                    openInBrowser()
+                                }
+                                "copy_link" -> {
+                                    copyToClipboard()
+                                }
+                                "wallpaper" -> {
+                                    viewModel.setWallpaper()
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
         }
 
         binding.playVideoButtonDetailsFragment.setOnClickListener {
@@ -112,7 +128,19 @@ class DetailsFragment : Fragment() {
             }
         })
 
+        binding.copyrightApodDetailsFragment.isSelected = true
+
         return binding.root
+    }
+
+    private fun openInBrowser() {
+        val urlString = getWebPage(viewModel.apod.value!!.date)
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(urlString)
+        val title = "Select browser"
+        val chooser = Intent.createChooser(intent, title)
+        if (intent.resolveActivity(requireActivity().packageManager) != null)
+            startActivity(chooser)
     }
 
     private fun setupViewModel() {
@@ -165,5 +193,22 @@ class DetailsFragment : Fragment() {
         } else {
             viewModel.saveImage()
         }
+    }
+
+    fun copyToClipboard() {
+        val clipboard = (requireActivity() as DetailsActivity).clipboard
+        val clip: ClipData = ClipData.newPlainText("text", apod.url)
+        clipboard?.let {
+            it.setPrimaryClip(clip)
+            Toast.makeText(
+                requireContext(),
+                "Copied to clipboard",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    companion object {
+        private const val REQUEST_STORAGE_PERMISSION = 0
     }
 }

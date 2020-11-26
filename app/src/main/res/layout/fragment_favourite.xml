@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -8,8 +9,7 @@
             type="com.javlonrahimov1212.apod.ui.favourite.FavouritesViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.favourite.FavouriteFragment">
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:text="@string/favourites"
-            android:textSize="32dp"
+            android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,20 +38,21 @@
                 android:id="@+id/dayOfWeekFavouriteFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sunday" />
+                tools:text="Sunday" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="4dp"
-                android:src="@drawable/ic_round_circle_24" />
+                android:src="@drawable/ic_round_circle_24"
+                android:contentDescription="@string/dot" />
 
             <TextView
                 android:id="@+id/dayOfMonthFavouritesFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="October 4" />
+                tools:text="October 4" />
         </LinearLayout>
 
         <androidx.viewpager2.widget.ViewPager2
@@ -64,6 +65,21 @@
             android:paddingEnd="60dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/containerForDateFavouritesFragment" />
+
+        <TextView
+            android:id="@+id/no_fav_text"
+            android:drawablePadding="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:drawableTint="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/you_have_no_favourite_apods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:drawableTopCompat="@drawable/ic_round_outlet_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

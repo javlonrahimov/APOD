@@ -17,7 +17,7 @@
         android:id="@+id/id_gallery"
         android:name="com.javlonrahimov1212.apod.ui.gallery.GalleryFragment"
         android:label="fragment_gallery"
-        tools:layout="@layout/fragment_gallery">
+        tools:layout="@layout/fragment_gallery_apod">
         <action
             android:id="@+id/action_id_gallery_to_id_favourites"
             app:destination="@id/id_favourites" />

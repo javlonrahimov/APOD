@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#272727</color>
+    <color name="colorPrimary">@android:color/background_dark</color>
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#FF6F00</color>
 </resources>

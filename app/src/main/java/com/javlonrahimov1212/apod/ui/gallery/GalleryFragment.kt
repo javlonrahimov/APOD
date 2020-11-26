@@ -19,7 +19,8 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.javlonrahimov1212.apod.adapters.ApodGalleryAdapter
 import com.javlonrahimov1212.apod.adapters.OnItemClickedGalleryAdapter
 import com.javlonrahimov1212.apod.database.ApodDatabase
-import com.javlonrahimov1212.apod.databinding.FragmentGalleryBinding
+import com.javlonrahimov1212.apod.databinding.FragmentGalleryApodBinding
+import com.javlonrahimov1212.apod.models.Apod
 import com.javlonrahimov1212.apod.retrofit.ApiHelper
 import com.javlonrahimov1212.apod.retrofit.RetrofitBuilderApod
 import com.javlonrahimov1212.apod.ui.DetailsActivity
@@ -41,29 +42,26 @@ class GalleryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        val binding = FragmentGalleryApodBinding.inflate(inflater, container, false)
         setupViewModel()
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         val adapter = ApodGalleryAdapter()
         binding.apodViewPager.adapter = adapter
+        adapter.onItemClickedGalleryAdapter = object : OnItemClickedGalleryAdapter {
+            override fun onClick(date: String) {
+                val intent =
+                    Intent(requireActivity().applicationContext, DetailsActivity::class.java)
+                intent.putExtra(DetailsActivity.APOD_DATE_KEY, date)
+                startActivity(intent)
+            }
+
+            override fun onFavButtonClicked(apod: Apod) {
+                viewModel.updateApod(apod.copy(isLiked = !apod.isLiked))
+            }
+        }
         viewModel.apod30Days.observe(viewLifecycleOwner, {
             adapter.submitList(it)
-            adapter.onItemClickedGalleryAdapter = object : OnItemClickedGalleryAdapter {
-                override fun onClick(date: String) {
-                    val intent =
-                        Intent(requireActivity().applicationContext, DetailsActivity::class.java)
-                    intent.putExtra(DetailsActivity.APOD_DATE_KEY, date)
-                    startActivity(intent)
-                }
-
-                override fun onFavButtonClicked(position: Int) {
-                    val apod = it[position]
-                    apod.isLiked = !apod.isLiked
-                    viewModel.updateApod(apod)
-                    adapter.notifyItemChanged(position)
-                }
-            }
             if (it.size < 30)
                 viewModel.setLast30Apods()
         })
@@ -79,7 +77,7 @@ class GalleryFragment : Fragment() {
         return binding.root
     }
 
-    private fun setUpViewPager(binding: FragmentGalleryBinding) {
+    private fun setUpViewPager(binding: FragmentGalleryApodBinding) {
         binding.apodViewPager.clipToPadding = false
         binding.apodViewPager.clipChildren = false
         binding.apodViewPager.offscreenPageLimit = 3
@@ -156,7 +154,7 @@ class GalleryFragment : Fragment() {
             selectedDate = simpleDateFormat.format(Date(it))
             val intent =
                 Intent(requireActivity().applicationContext, DetailsActivity::class.java)
-            intent.putExtra("APOD_KEY", selectedDate)
+            intent.putExtra(DetailsActivity.APOD_DATE_KEY, selectedDate)
             startActivity(intent)
         }
 

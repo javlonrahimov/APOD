@@ -43,11 +43,8 @@ class HomeViewModel(private val mainRepository: MainRepository) : ViewModel() {
             try {
                 mainRepository.setApodToday()
             } catch (unknownHostException: UnknownHostException) {
-                Log.d("TAG_HOME_VIEW_MODEL", unknownHostException.message.toString())
             } catch (socketTimeOutException: SocketTimeoutException) {
-                Log.d("TAG_HOME_VIEW_MODEL", socketTimeOutException.message.toString())
             } catch (e: Exception) {
-                Log.d("TAG_HOME_VIEW_MODEL", "Exeption" + e.message.toString())
             }
         }
     }

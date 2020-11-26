@@ -6,7 +6,8 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="18dp">
+    app:cardCornerRadius="18dp"
+    app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,11 +15,10 @@
 
 
         <ImageView
-            android:scaleType="centerCrop"
             android:id="@+id/image_item_apod"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/image" />
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:text="@string/dummy_text"
                 android:textColor="#B3FFFFFF" />
 
-            <FrameLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -56,27 +56,38 @@
 
                 <TextView
                     android:id="@+id/copyright_item_apod"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|bottom"
                     android:drawablePadding="4dp"
-                    android:gravity="center"
+                    android:ellipsize="marquee"
+                    android:fadingEdge="horizontal"
+                    android:gravity="center|start"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
                     android:text="IMP Team"
-                    android:drawableTint="@color/colorAccent"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
-                    app:drawableStartCompat="@drawable/ic_round_copyright_24" />
+                    app:drawableStartCompat="@drawable/ic_round_copyright_24"
+                    app:drawableTint="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/fav_button_item_apod_gallery"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/fav_button_item_apod_gallery"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
+                    android:layout_height="wrap_content"
                     android:background="?selectableItemBackgroundBorderless"
                     android:padding="6dp"
                     android:src="@drawable/ic_round_favorite_border_24"
-                    android:tint="@color/colorAccent" />
-            </FrameLayout>
+                    android:tint="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

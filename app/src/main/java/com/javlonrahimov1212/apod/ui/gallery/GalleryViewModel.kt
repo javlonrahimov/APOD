@@ -15,7 +15,7 @@ class GalleryViewModel(private val mainRepository: MainRepository) : ViewModel()
     val apod30Days: LiveData<List<Apod>> = mainRepository.getLast30Apods()
 
     fun setLast30Apods() = viewModelScope.launch {
-        mainRepository.setLast30Apods(getLast30Days())
+        mainRepository.setLast10Apods(getLast10Days())
     }
 
 
@@ -23,12 +23,12 @@ class GalleryViewModel(private val mainRepository: MainRepository) : ViewModel()
         mainRepository.updateApod(apod)
     }
 
-    private fun getLast30Days(): List<String> {
+    private fun getLast10Days(): List<String> {
         val result = ArrayList<String>()
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         val calendar = Calendar.getInstance()
 
-        for (i in 0..30) {
+        for (i in 0..9) {
             calendar.add(Calendar.DAY_OF_YEAR, -1)
             result.add(simpleDateFormat.format(calendar.time))
         }

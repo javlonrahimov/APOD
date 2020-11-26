@@ -10,4 +10,6 @@
     <string name="search_hint">Search for … (e.g. "Orion")</string>
     <string name="preferences">Preferences</string>
     <string name="favourites">Favourites</string>
+    <string name="dot">dot</string>
+    <string name="you_have_no_favourite_apods">You have no favourite apods!!!</string>
 </resources>

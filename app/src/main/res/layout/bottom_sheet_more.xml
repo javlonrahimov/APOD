@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/text_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Options"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/divider_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_margin="8dp"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/open_in_browser"
+        app:layout_constraintTop_toBottomOf="@id/text_options" />
+
+    <TextView
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/open_in_browser"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawablePadding="16dp"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Open in browser"
+        android:textSize="20sp"
+        app:drawableStartCompat="@drawable/ic_round_open_in_browser_24"
+        app:layout_constraintEnd_toEndOf="@+id/divider_bottom_sheet"
+        app:layout_constraintStart_toStartOf="@id/divider_bottom_sheet"
+        app:layout_constraintTop_toBottomOf="@id/divider_bottom_sheet" />
+
+    <TextView
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/copy_image_link"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawablePadding="16dp"
+        android:padding="10dp"
+        android:text="Copy image link"
+        android:textSize="20sp"
+        app:drawableStartCompat="@drawable/ic_round_link_24"
+        app:layout_constraintEnd_toEndOf="@+id/divider_bottom_sheet"
+        app:layout_constraintStart_toStartOf="@id/divider_bottom_sheet"
+        app:layout_constraintTop_toBottomOf="@id/open_in_browser" />
+
+    <TextView
+        android:layout_marginBottom="8dp"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/set_as_wallpaper"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawablePadding="16dp"
+        android:padding="8dp"
+        android:text="Set as wallpaper"
+        android:textSize="20sp"
+        app:drawableStartCompat="@drawable/ic_round_wallpaper_24"
+        app:layout_constraintBottom_toTopOf="@id/divider_bottom_sheet_2"
+        app:layout_constraintEnd_toEndOf="@+id/divider_bottom_sheet"
+        app:layout_constraintStart_toStartOf="@id/divider_bottom_sheet"
+        app:layout_constraintTop_toBottomOf="@id/copy_image_link" />
+
+    <LinearLayout
+        android:id="@+id/divider_bottom_sheet_2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_margin="8dp"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/close_bottom_sheet" />
+
+    <TextView
+        android:id="@+id/close_bottom_sheet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:drawablePadding="16dp"
+        android:focusable="true"
+        android:padding="6dp"
+        android:text="Close"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

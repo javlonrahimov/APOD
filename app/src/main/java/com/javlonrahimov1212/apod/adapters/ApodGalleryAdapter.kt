@@ -48,6 +48,11 @@ class ApodGalleryAdapter() :
         diffResult.dispatchUpdatesTo(this)
     }
 
+    fun submitListFav(apods: List<Apod>) {
+        this.apods = apods
+        notifyDataSetChanged()
+    }
+
     class ApodGalleryViewHolder(
         itemView: View,
         var onItemClickedGalleryAdapter: OnItemClickedGalleryAdapter?
@@ -63,22 +68,21 @@ class ApodGalleryAdapter() :
                 apod.url.endsWith(".jpg") -> {
                     Glide.with(apodImage.context)
                         .load(apod.url)
-                        .placeholder(R.drawable.transparent)
                         .into(apodImage)
                 }
                 apod.url.contains("youtube") -> {
                     Glide.with(apodImage.context)
                         .load(getThumbnailUrl(apod.url))
-                        .placeholder(R.drawable.transparent)
                         .into(apodImage)
                 }
                 else -> {
-                    apodImage.setImageResource(R.drawable.transparent)
+                    apodImage.setImageResource(R.drawable.placeholder)
                 }
             }
             apodTitle.text = apod.title
             apodDescription.text = apod.explanation
             apodCopyright.text = apod.copyright
+            apodCopyright.isSelected = true
 
             if (apod.isLiked) {
                 itemView.fav_button_item_apod_gallery.setImageResource(R.drawable.ic_round_favorite_24)
@@ -90,7 +94,7 @@ class ApodGalleryAdapter() :
                 onItemClickedGalleryAdapter?.onClick(apod.date)
             }
             itemView.fav_button_item_apod_gallery.setOnClickListener {
-                onItemClickedGalleryAdapter?.onFavButtonClicked(position)
+                onItemClickedGalleryAdapter?.onFavButtonClicked(apod)
             }
 
         }
@@ -101,7 +105,7 @@ interface OnItemClickedGalleryAdapter {
 
     fun onClick(date: String)
 
-    fun onFavButtonClicked(position: Int)
+    fun onFavButtonClicked(apod: Apod)
 }
 
 class ApodGalleryAdapterDiffCallback(var oldList: List<Apod>, var newList: List<Apod>) :

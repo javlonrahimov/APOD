@@ -5,7 +5,7 @@ import com.javlonrahimov1212.apod.models.Apod
 class ApiHelper(private val apiService: ApiService) {
     suspend fun getApodToday() = apiService.getApodToday()
 
-    suspend fun getLast30Apod(days: List<String>): List<Apod> {
+    suspend fun getLast10Apod(days: List<String>): List<Apod> {
         val result = ArrayList<Apod>()
         for (i in days) {
             result.add(apiService.getApodByDate(i))

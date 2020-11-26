@@ -15,40 +15,27 @@ class MainRepository(private val apiHelper: ApiHelper, private val apodDao: Apod
 
     suspend fun setApodToday() {
         if (!apodDao.exists(getCurrentDate())) {
-            val apod = apiHelper.getApodToday()
-            apodDao.insertApod(
-                copyright = apod.copyright,
-                date = apod.date,
-                explanation = apod.explanation,
-                hdUrl = apod.hdUrl,
-                media_type = apod.media_type,
-                service_version = apod.service_version,
-                title = apod.title,
-                url = apod.url,
-                is_liked = apod.isLiked
-            )
+            var apod = apiHelper.getApodToday()
+            if (apod.copyright == "")
+
+                apod = apod.copy(copyright = "NASA")
+            apodDao.insertApod(apod)
         }
     }
 
-    suspend fun setLast30Apods(days: List<String>) {
-        val apods = apiHelper.getLast30Apod(days)
+    suspend fun setLast10Apods(days: List<String>) {
+        val apods = apiHelper.getLast10Apod(days)
+        for (i in apods.indices) {
+            if (apods[i].copyright == "")
+                (apods as ArrayList<Apod>)[i] = apods[i].copy(copyright = "NASA")
+        }
         apodDao.insertApods(apods)
     }
 
     suspend fun setApodByDate(date: String) {
         if (!apodDao.exists(date)) {
             val apod = apiHelper.getApodByDate(date)
-            apodDao.insertApod(
-                copyright = apod.copyright,
-                date = apod.date,
-                explanation = apod.explanation,
-                hdUrl = apod.hdUrl,
-                media_type = apod.media_type,
-                service_version = apod.service_version,
-                title = apod.title,
-                url = apod.url,
-                is_liked = apod.isLiked
-            )
+            apodDao.insertApod(apod)
         }
     }
 
