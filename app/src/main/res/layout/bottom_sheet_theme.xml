@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="App theme"
+        android:text="@string/app_theme"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="8dp"
-            android:text="System default"
+            android:text="@string/system_default"
             android:textSize="20sp" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
@@ -57,7 +57,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="10dp"
-            android:text="Light"
+            android:text="@string/light"
             android:textSize="20sp" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
@@ -68,7 +68,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="8dp"
-            android:text="Dark"
+            android:text="@string/dark"
             android:textSize="20sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -91,7 +91,7 @@
         android:drawablePadding="16dp"
         android:focusable="true"
         android:padding="6dp"
-        android:text="Close"
+        android:text="@string/close"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

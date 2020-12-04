@@ -38,6 +38,10 @@ class PreferenceManager(context: Context) {
             }
         }
 
+    val notificationPref: Flow<Boolean> = dataStore.data.map {
+        it[IS_NOTIFICATION_ENABLED] ?: true
+    }
+
 
     suspend fun setAppTheme(appTheme: AppTheme) {
         dataStore.edit { preferences ->
@@ -50,7 +54,14 @@ class PreferenceManager(context: Context) {
         }
     }
 
+    suspend fun setNotificationPref(boolean: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[IS_NOTIFICATION_ENABLED] = boolean
+        }
+    }
+
     companion object {
         val APP_THEME = preferencesKey<String>("app_theme")
+        val IS_NOTIFICATION_ENABLED = preferencesKey<Boolean>("is_notification_enabled")
     }
 }

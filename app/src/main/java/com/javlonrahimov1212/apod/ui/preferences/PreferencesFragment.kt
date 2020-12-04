@@ -57,6 +57,15 @@ class PreferencesFragment : Fragment() {
             }
         }
 
+        viewModel.notificationPref.observe(viewLifecycleOwner, { bool ->
+            binding.notificationPref.isChecked = bool
+        })
+
+        binding.notificationPref.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setNotificationPref(isChecked)
+        }
+
+
         return binding.root
     }
 

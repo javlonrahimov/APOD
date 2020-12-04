@@ -5,14 +5,19 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.asLiveData
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import androidx.work.*
 import com.javlonrahimov1212.apod.R
 import com.javlonrahimov1212.apod.preferences.PreferenceManager
 import com.javlonrahimov1212.apod.utils.AppTheme
 import com.javlonrahimov1212.apod.utils.NetworkStatus
 import com.javlonrahimov1212.apod.utils.isDarkTheme
+import com.javlonrahimov1212.apod.workers.FetchDailyApod
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +37,7 @@ class MainActivity : AppCompatActivity() {
             else
                 connection_status_view.visibility = View.VISIBLE
         })
+        setUpWorker()
     }
 
     private fun observeAppThemePreferences() {
@@ -62,5 +68,45 @@ class MainActivity : AppCompatActivity() {
             bottom_navigation,
             navHostFragment!!.navController
         )
+    }
+
+    private fun setUpWorker() {
+
+        val mCalendar: Calendar = GregorianCalendar()
+        val mTimeZone = mCalendar.timeZone
+        val mGMTOffset = mTimeZone.rawOffset
+
+        val currentDate = Calendar.getInstance()
+        val dueDate = Calendar.getInstance()
+        dueDate.set(
+            Calendar.HOUR_OF_DAY,
+            (5 + TimeUnit.HOURS.convert(mGMTOffset.toLong(), TimeUnit.MILLISECONDS)).toInt()
+        )
+        dueDate.set(Calendar.MINUTE, 0)
+        dueDate.set(Calendar.SECOND, 0)
+        if (dueDate.before(currentDate)) {
+            dueDate.add(Calendar.HOUR_OF_DAY, 24)
+        }
+        val timeDiff = dueDate.timeInMillis - currentDate.timeInMillis
+
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val dailyWorkRequest = OneTimeWorkRequestBuilder<FetchDailyApod>()
+            .setConstraints(constraints)
+            .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
+            .setBackoffCriteria(
+                BackoffPolicy.LINEAR,
+                OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
+                TimeUnit.MILLISECONDS
+            )
+            .addTag(TASK_ID)
+            .build()
+        WorkManager.getInstance(applicationContext).enqueue(dailyWorkRequest)
+    }
+
+    companion object {
+        const val TASK_ID = "fetch_daily_apod"
     }
 }

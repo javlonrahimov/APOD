@@ -13,14 +13,15 @@ class MainRepository(private val apiHelper: ApiHelper, private val apodDao: Apod
     fun getApodByDate(date: String) = apodDao.getApodByDate(date)
     fun getFavouritesApod() = apodDao.getFavouriteApods(true)
 
-    suspend fun setApodToday() {
+    suspend fun setApodToday(): Boolean {
         if (!apodDao.exists(getCurrentDate())) {
             var apod = apiHelper.getApodToday()
             if (apod.copyright == "")
-
                 apod = apod.copy(copyright = "NASA")
             apodDao.insertApod(apod)
+            return true
         }
+        return false
     }
 
     suspend fun setLast10Apods(days: List<String>) {

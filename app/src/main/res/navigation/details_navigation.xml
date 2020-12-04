@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_details">
         <action
             android:id="@+id/action_detailsFragment_to_imageFullscreenFragment"
-            app:destination="@id/imageFullscreenFragment">
+            app:destination="@id/imageFullscreenFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out">
             <argument
                 android:name="apodUrl"
                 app:argType="string" />

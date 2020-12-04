@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="18dp"
-    app:cardElevation="4dp">
+    app:cardCornerRadius="18dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,6 +18,7 @@
             android:id="@+id/image_item_apod"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@string/main_image"
             android:scaleType="centerCrop" />
 
         <LinearLayout
@@ -35,18 +36,18 @@
                 android:id="@+id/title_item_apod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Yogi And Friends In 3D"
                 android:textColor="@color/colorAccent"
                 android:textSize="22sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Yogi And Friends In 3D" />
 
             <TextView
                 android:id="@+id/description_item_apod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="4"
-                android:text="@string/dummy_text"
-                android:textColor="#B3FFFFFF" />
+                android:textColor="#B3FFFFFF"
+                tools:text="@string/dummy_text" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -66,7 +67,6 @@
                     android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:text="IMP Team"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
                     app:drawableStartCompat="@drawable/ic_round_copyright_24"
@@ -74,13 +74,15 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/fav_button_item_apod_gallery"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="IMP Team" />
 
                 <ImageButton
                     android:id="@+id/fav_button_item_apod_gallery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/like_button"
                     android:padding="6dp"
                     android:src="@drawable/ic_round_favorite_border_24"
                     android:tint="@color/colorAccent"

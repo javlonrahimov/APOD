@@ -16,12 +16,13 @@
         android:layout_height="match_parent">
 
         <ImageButton
-            android:elevation="4dp"
             android:id="@+id/back_button_details_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:background="@drawable/back_button_background"
+            android:contentDescription="@string/back_button"
+            android:elevation="4dp"
             android:padding="6dp"
             android:src="@drawable/ic_round_chevron_left_24"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,6 +56,7 @@
                             android:id="@+id/image_view_apod_details_fragment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:contentDescription="@string/main_image"
                             app:imageUrl="@{viewModel.apod.url}"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:src="@drawable/transparent" />
@@ -63,6 +65,7 @@
                             android:id="@+id/play_video_button_details_fragment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:contentDescription="@string/youtube_icon"
                             android:src="@drawable/ic_youtube"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@id/image_view_apod_details_fragment"
@@ -76,6 +79,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/fullscreen_button"
                             android:padding="6dp"
                             android:src="@drawable/ic_round_fullscreen_24"
                             android:tint="@color/colorAccent"
@@ -88,12 +92,12 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
                             android:drawablePadding="8dp"
-                            android:maxLines="1"
-                            android:singleLine="true"
                             android:ellipsize="marquee"
                             android:fadingEdge="horizontal"
                             android:marqueeRepeatLimit="marquee_forever"
+                            android:maxLines="1"
                             android:scrollHorizontally="true"
+                            android:singleLine="true"
                             android:text="@{viewModel.apod.copyright}"
                             android:textSize="16sp"
                             app:drawableStartCompat="@drawable/ic_round_copyright_24"
@@ -124,12 +128,12 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
                             android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/share_button"
                             android:padding="6dp"
                             android:src="@drawable/ic_baseline_share_24"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/title_apod_details_fragment" />
-
 
 
                         <ImageButton
@@ -138,6 +142,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
                             android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/download_button"
                             android:padding="6dp"
                             android:src="@drawable/ic_round_save_24"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -152,6 +157,7 @@
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="16dp"
                             android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/like_button"
                             android:padding="6dp"
                             android:src="@drawable/ic_round_favorite_border_24"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -160,15 +166,16 @@
                             app:layout_constraintTop_toBottomOf="@id/title_apod_details_fragment" />
 
                         <ImageButton
-                            app:layout_constraintEnd_toEndOf="parent"
                             android:id="@+id/more_button_apod_details_fragment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
                             android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/more_button"
                             android:padding="6dp"
                             android:src="@drawable/ic_baseline_more_horiz_24"
-                            app:layout_constraintBottom_toBottomOf="parent" />
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
