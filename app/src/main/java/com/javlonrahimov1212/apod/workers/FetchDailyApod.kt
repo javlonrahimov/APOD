@@ -19,6 +19,9 @@ import com.javlonrahimov1212.apod.repository.MainRepository
 import com.javlonrahimov1212.apod.retrofit.ApiHelper
 import com.javlonrahimov1212.apod.retrofit.RetrofitBuilderApod
 import com.javlonrahimov1212.apod.ui.MainActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -64,19 +67,24 @@ class FetchDailyApod(context: Context, params: WorkerParameters) :
         WorkManager.getInstance(applicationContext)
             .enqueue(dailyWorkRequest)
         fetchApod()
-        mainRepository.getApodToday().observeForever {
-            Glide.with(applicationContext)
-                .downloadOnly()
-                .diskCacheStrategy(DiskCacheStrategy.DATA) // Cache resource before it's decoded
-                .load(it.url)
-                .submit(SIZE_ORIGINAL, SIZE_ORIGINAL)
-                .get()
-            PreferenceManager(applicationContext).notificationPref.asLiveData()
-                .observeForever { canShow ->
-                    if (canShow) {
-                        sendNotification(it.title, it.explanation)
-                    }
+
+        GlobalScope.launch(Dispatchers.Main) {
+            mainRepository.getApodToday().observeForever {
+                launch(Dispatchers.IO) {
+                    Glide.with(applicationContext)
+                        .downloadOnly()
+                        .diskCacheStrategy(DiskCacheStrategy.DATA) // Cache resource before it's decoded
+                        .load(it.url)
+                        .submit(SIZE_ORIGINAL, SIZE_ORIGINAL)
+                        .get()
                 }
+
+                PreferenceManager(applicationContext).notificationPref.asLiveData()
+                    .observeForever { canShow ->
+                        if (canShow)
+                            sendNotification(it.title, it.explanation)
+                    }
+            }
         }
         return Result.success()
     }
@@ -105,7 +113,7 @@ class FetchDailyApod(context: Context, params: WorkerParameters) :
             applicationContext,
             "default"
         )
-            .setStyle(NotificationCompat.BigTextStyle().bigText("long notification content"))
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
             .setContentTitle(title)
             .setContentText(message)
             .setContentIntent(pendingIntent)
