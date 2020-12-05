@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/id_home"
-        android:name="com.javlonrahimov1212.apod.ui.home.HomeFragment"
+        android:name="com.javlonrahimov1212.apod12.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/id_gallery"
-        android:name="com.javlonrahimov1212.apod.ui.gallery.GalleryFragment"
+        android:name="com.javlonrahimov1212.apod12.ui.gallery.GalleryFragment"
         android:label="fragment_gallery"
         tools:layout="@layout/fragment_gallery_apod">
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/id_preferences"
-        android:name="com.javlonrahimov1212.apod.ui.preferences.PreferencesFragment"
+        android:name="com.javlonrahimov1212.apod12.ui.preferences.PreferencesFragment"
         android:label="fragment_preferences"
         tools:layout="@layout/fragment_preferences">
         <action
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/id_favourites"
-        android:name="com.javlonrahimov1212.apod.ui.favourite.FavouriteFragment"
+        android:name="com.javlonrahimov1212.apod12.ui.favourite.FavouriteFragment"
         android:label="fragment_favourite"
         tools:layout="@layout/fragment_favourite" >
         <action

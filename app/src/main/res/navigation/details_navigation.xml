@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.javlonrahimov1212.apod.ui.details.DetailsFragment"
+        android:name="com.javlonrahimov1212.apod12.ui.details.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details">
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/imageFullscreenFragment"
-        android:name="com.javlonrahimov1212.apod.ui.fullscreen_image.ImageFullscreenFragment"
+        android:name="com.javlonrahimov1212.apod12.ui.fullscreen_image.ImageFullscreenFragment"
         android:label="fragment_image_fullscreen"
         tools:layout="@layout/fragment_image_fullscreen">
         <argument

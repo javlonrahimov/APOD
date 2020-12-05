@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.javlonrahimov1212.apod.ui.details.DetailsViewModel" />
+            type="com.javlonrahimov1212.apod12.ui.details.DetailsViewModel" />
     </data>
 
     <FrameLayout

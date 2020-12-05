@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.javlonrahimov1212.apod.ui.home.HomeViewModel" />
+            type="com.javlonrahimov1212.apod12.ui.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"

@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.javlonrahimov1212.apod.ui.favourite.FavouritesViewModel" />
+            type="com.javlonrahimov1212.apod12.ui.favourite.FavouritesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"

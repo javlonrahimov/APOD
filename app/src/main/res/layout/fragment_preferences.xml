@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.javlonrahimov1212.apod.ui.preferences.PreferencesViewModel" />
+            type="com.javlonrahimov1212.apod12.ui.preferences.PreferencesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -64,6 +64,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/app_language" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/wallpaper_pref"
+            android:padding="12dp"
+            android:background="?android:selectableItemBackground"
+            android:text="@string/set_wallpaper_daily"
+            android:textSize="24sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/notification_pref" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

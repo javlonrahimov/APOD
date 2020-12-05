@@ -33,4 +33,5 @@
     <string name="notifications">Notifications</string>
     <string name="home">Home</string>
     <string name="gallery">Gallery</string>
+    <string name="set_wallpaper_daily">Set wallpaper daily</string>
 </resources>

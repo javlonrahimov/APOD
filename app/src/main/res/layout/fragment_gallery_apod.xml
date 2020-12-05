@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.javlonrahimov1212.apod.ui.gallery.GalleryViewModel" />
+            type="com.javlonrahimov1212.apod12.ui.gallery.GalleryViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
