@@ -2,10 +2,12 @@ package com.javlonrahimov1212.apod12.ui
 
 import android.os.Bundle
 import android.view.View
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updatePadding
 import androidx.lifecycle.asLiveData
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.work.*
@@ -29,6 +31,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         NetworkStatus.init(application)
         preferenceManager = PreferenceManager(applicationContext)
+        val content: View = findViewById(R.id.mainContainer)
+        content.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        content.setOnApplyWindowInsetsListener { view, insets ->
+            view.updatePadding(top = insets.systemWindowInsetTop)
+            insets
+        }
         observeAppThemePreferences()
         setUpNavigation()
         NetworkStatus.observe(this, { isConnected ->

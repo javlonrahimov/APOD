@@ -50,8 +50,7 @@ class FetchDailyApod(context: Context, params: WorkerParameters) :
         val currentDate = Calendar.getInstance()
         val dueDate = Calendar.getInstance()
         dueDate.set(
-            Calendar.HOUR_OF_DAY,
-            (5 + TimeUnit.HOURS.convert(mGMTOffset.toLong(), TimeUnit.MILLISECONDS)).toInt()
+            Calendar.HOUR_OF_DAY, (6 + TimeUnit.HOURS.convert(mGMTOffset.toLong(), TimeUnit.MILLISECONDS)).toInt()
         )
         dueDate.set(Calendar.MINUTE, 0)
         dueDate.set(Calendar.SECOND, 0)
@@ -84,6 +83,9 @@ class FetchDailyApod(context: Context, params: WorkerParameters) :
                         if (canSet)
                             setWallpaper(it)
                     }
+
+                Glide.with(applicationContext)
+                    .downloadOnly().load(it.url).submit()
             }
         }
         return Result.success()
