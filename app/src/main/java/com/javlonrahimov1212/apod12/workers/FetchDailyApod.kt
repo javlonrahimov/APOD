@@ -117,6 +117,7 @@ class FetchDailyApod(context: Context, params: WorkerParameters) :
         )
             .setStyle(NotificationCompat.BigTextStyle().bigText(message))
             .setContentTitle(title)
+            .setAutoCancel(true)
             .setContentText(message)
             .setContentIntent(pendingIntent)
             .setSmallIcon(R.mipmap.ic_launcher)

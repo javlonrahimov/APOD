@@ -2,10 +2,8 @@ package com.javlonrahimov1212.apod12.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updatePadding
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.NavHostFragment
@@ -13,9 +11,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.work.*
 import com.javlonrahimov1212.apod12.R
 import com.javlonrahimov1212.apod12.preferences.PreferenceManager
-import com.javlonrahimov1212.apod12.utils.AppTheme
-import com.javlonrahimov1212.apod12.utils.NetworkStatus
-import com.javlonrahimov1212.apod12.utils.isDarkTheme
+import com.javlonrahimov1212.apod12.utils.*
 import com.javlonrahimov1212.apod12.workers.FetchDailyApod
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -90,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         val dueDate = Calendar.getInstance()
         dueDate.set(
             Calendar.HOUR_OF_DAY,
-            (5 + TimeUnit.HOURS.convert(mGMTOffset.toLong(), TimeUnit.MILLISECONDS)).toInt()
+            (6 + TimeUnit.HOURS.convert(mGMTOffset.toLong(), TimeUnit.MILLISECONDS)).toInt()
         )
         dueDate.set(Calendar.MINUTE, 0)
         dueDate.set(Calendar.SECOND, 0)
