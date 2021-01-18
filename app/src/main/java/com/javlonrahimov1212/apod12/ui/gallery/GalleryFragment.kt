@@ -41,7 +41,7 @@ class GalleryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentGalleryApodBinding.inflate(inflater, container, false)
         setupViewModel()
         binding.viewModel = viewModel
@@ -83,10 +83,10 @@ class GalleryFragment : Fragment() {
         binding.apodViewPager.offscreenPageLimit = 3
         binding.apodViewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         val compositePageTransformer = CompositePageTransformer()
-        compositePageTransformer.addTransformer(MarginPageTransformer(40))
+        compositePageTransformer.addTransformer(MarginPageTransformer(60))
         compositePageTransformer.addTransformer { page, position ->
             val r = 1 - abs(position)
-            page.scaleY = 0.9f + r * 0.1f
+            page.scaleY = 0.9f + r * 0.07f
         }
         binding.apodViewPager.setPageTransformer(compositePageTransformer)
 

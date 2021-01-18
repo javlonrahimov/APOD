@@ -11,7 +11,9 @@ import androidx.navigation.ui.NavigationUI
 import androidx.work.*
 import com.javlonrahimov1212.apod12.R
 import com.javlonrahimov1212.apod12.preferences.PreferenceManager
-import com.javlonrahimov1212.apod12.utils.*
+import com.javlonrahimov1212.apod12.utils.AppTheme
+import com.javlonrahimov1212.apod12.utils.NetworkStatus
+import com.javlonrahimov1212.apod12.utils.isDarkTheme
 import com.javlonrahimov1212.apod12.workers.FetchDailyApod
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*

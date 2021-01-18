@@ -77,7 +77,7 @@ class FavouriteFragment : Fragment() {
         binding.apodViewPagerFavouriteFragment.getChildAt(0).overScrollMode =
             RecyclerView.OVER_SCROLL_NEVER
         val compositePageTransformer = CompositePageTransformer()
-        compositePageTransformer.addTransformer(MarginPageTransformer(40))
+        compositePageTransformer.addTransformer(MarginPageTransformer(60))
         compositePageTransformer.addTransformer { page, position ->
             val r = 1 - abs(position)
             page.scaleY = 0.9f + r * 0.1f

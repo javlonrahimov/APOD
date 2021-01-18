@@ -50,7 +50,8 @@ class FetchDailyApod(context: Context, params: WorkerParameters) :
         val currentDate = Calendar.getInstance()
         val dueDate = Calendar.getInstance()
         dueDate.set(
-            Calendar.HOUR_OF_DAY, (6 + TimeUnit.HOURS.convert(mGMTOffset.toLong(), TimeUnit.MILLISECONDS)).toInt()
+            Calendar.HOUR_OF_DAY,
+            (6 + TimeUnit.HOURS.convert(mGMTOffset.toLong(), TimeUnit.MILLISECONDS)).toInt()
         )
         dueDate.set(Calendar.MINUTE, 0)
         dueDate.set(Calendar.SECOND, 0)
@@ -72,20 +73,27 @@ class FetchDailyApod(context: Context, params: WorkerParameters) :
         fetchApod()
 
         GlobalScope.launch(Dispatchers.Main) {
-            mainRepository.getApodToday().observeForever {
-                PreferenceManager(applicationContext).notificationPref.asLiveData()
-                    .observeForever { canShow ->
-                        if (canShow)
-                            sendNotification(it.title, it.explanation)
-                    }
-                PreferenceManager(applicationContext).wallpaperPref.asLiveData()
-                    .observeForever { canSet ->
-                        if (canSet)
-                            setWallpaper(it)
-                    }
+            PreferenceManager(applicationContext).lastApodDate.asLiveData().observeForever { date ->
+                mainRepository.getApodToday().observeForever {
+                    if (date != it.date) {
+                        PreferenceManager(applicationContext).notificationPref.asLiveData()
+                            .observeForever { canShow ->
+                                if (canShow)
+                                    sendNotification(it.title, it.explanation)
+                                GlobalScope.launch {
+                                    PreferenceManager(applicationContext).setLastApodDate(it.date)
+                                }
+                            }
+                        PreferenceManager(applicationContext).wallpaperPref.asLiveData()
+                            .observeForever { canSet ->
+                                if (canSet)
+                                    setWallpaper(it)
+                            }
 
-                Glide.with(applicationContext)
-                    .downloadOnly().load(it.url).submit()
+                        Glide.with(applicationContext)
+                            .downloadOnly().load(it.url).submit()
+                    }
+                }
             }
         }
         return Result.success()

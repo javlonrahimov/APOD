@@ -63,6 +63,7 @@
             android:layout_margin="22dp"
             android:clickable="true"
             android:focusable="true"
+            app:cardElevation="6dp"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardCornerRadius="18dp"
             app:layout_constraintBottom_toBottomOf="parent"

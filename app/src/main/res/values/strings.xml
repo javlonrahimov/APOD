@@ -4,7 +4,6 @@
     <string name="dummy_text"> From July of 1997, a ramp from the Pathfinder lander, the Sojourner robot rover, airbags, a couch, Barnacle Bill and Yogi Rock appear together in this 3D stereo view of the surface of Mars.\n Barnacle Bill is the rock just left of the solar-paneled Sojourner. Yogi is the big friendly-looking boulder at top right. The \'couch\' is the angular rock shape visible near center on the horizon. Look at the image with red/blue glasses (or just hold a piece of clear red plastic over your left eye and blue or green over your right) to get the dramatic 3D perspective. The stereo view was recorded by the remarkable Imager for Mars Pathfinder (IMP) camera. The IMP had two optical paths for stereo imaging and ranging and was equipped with an array of color filters for spectral analysis. Operating as the first astronomical observatory on Mars, the IMP also recorded images of the Sun and Deimos, the smallest of Mars\' two tiny moons. This July saw the launch of NASA\'s Mars Perseverance Rover on a mission to the Red Planet.</string>
     <string name="offline_message">You\'re offline! Check your internet connection.</string>
     <string name="explanation">Explanation</string>
-    <string name="search_hint">Search for … (e.g. "Orion")</string>
     <string name="preferences">Preferences</string>
     <string name="favourites">Favourites</string>
     <string name="dot">dot</string>
@@ -29,7 +28,6 @@
     <string name="pick_date">pick date</string>
     <string name="go_to_first">go to first</string>
     <string name="divider_dot">divider dot</string>
-    <string name="app_language">App language</string>
     <string name="notifications">Notifications</string>
     <string name="home">Home</string>
     <string name="gallery">Gallery</string>

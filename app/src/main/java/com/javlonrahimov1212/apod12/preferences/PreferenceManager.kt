@@ -46,6 +46,9 @@ class PreferenceManager(context: Context) {
         it[CAN_SET_WALLPAPER_DAILY] ?: false
     }
 
+    val lastApodDate : Flow<String> = dataStore.data.map {
+        it[LAST_APOD_DATE] ?: ""
+    }
 
     suspend fun setAppTheme(appTheme: AppTheme) {
         dataStore.edit { preferences ->
@@ -70,9 +73,16 @@ class PreferenceManager(context: Context) {
         }
     }
 
+    suspend fun setLastApodDate(string: String){
+        dataStore.edit { preferences ->
+            preferences[LAST_APOD_DATE] = string
+        }
+    }
+
     companion object {
         val APP_THEME = preferencesKey<String>("app_theme")
         val IS_NOTIFICATION_ENABLED = preferencesKey<Boolean>("is_notification_enabled")
         val CAN_SET_WALLPAPER_DAILY = preferencesKey<Boolean>("can_set_wallpaper_daily")
+        val LAST_APOD_DATE = preferencesKey<String>("last_apod_date")
     }
 }
